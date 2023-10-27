@@ -15,7 +15,7 @@
         <div class="col-sm-6 col-md-4 mx-auto">
             <div class="box ">
                 <div class="img-box">
-                    <img src="assests/images/s1.png" alt="" />
+                    <img src="asses`ts/images/s1.png" alt="" />
                 </div>
                 <div class="detail-box">
                     <h5>

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 
+
 <head>
   <!-- Basic -->
   <meta charset="utf-8" />
@@ -26,6 +27,7 @@
   <!-- responsive style -->
   <link href="assests/css/responsive.css" rel="stylesheet" />
 
+@yield('styles')
 </head>
 
 <body>

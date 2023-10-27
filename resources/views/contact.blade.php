@@ -1,4 +1,11 @@
 @extends('app')
+@section('styles')
+    <style>
+        .contact_section input {
+            color: black;
+        }
+    </style>
+@endsection
 @section('content')
 
 
@@ -10,21 +17,27 @@
         <h2>
           Contact Us
         </h2>
+        @if(Session::has('success'))
+            <div class="alert alert-success">
+                {{ Session::get('success') }}
+            </div>
+        @endif
       </div>
       <div class="row">
         <div class="col-md-6">
-          <form action="">
+          <form action="contact_save". method = "post">
+            @csrf
             <div>
-              <input type="text" placeholder="Name" />
+              <input type="text" placeholder="Name" name = "name" />
             </div>
             <div>
-              <input type="text" placeholder="Phone Number" />
+              <input type="text" placeholder="Phone Number" name = "phone_no"/>
             </div>
             <div>
-              <input type="email" placeholder="Email" />
+              <input type="email" placeholder="Email" name = "email" />
             </div>
             <div>
-              <input type="text" class="message-box" placeholder="Message" />
+              <input type="text" class="message-box" placeholder="Message" name = "message" />
             </div>
             <div class="d-flex ">
               <button>
