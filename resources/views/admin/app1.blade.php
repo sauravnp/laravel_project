@@ -129,14 +129,6 @@
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="/admin/messages" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Messages
-                                </p>
-                            </a>
-                        </li>
                     </ul>
                 </nav>
                 <!-- /.sidebar-menu -->

@@ -1,12 +1,11 @@
 <?php
-use Illuminate\Http\Request;
 
+use App\Http\Controllers\ServiceController;
 use App\Models\Service;
 use App\Models\Message;
+use App\Models\Testimonial;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session; // Import the Session facade
-
-
 
 /*
 |--------------------------------------------------------------------------
@@ -21,43 +20,43 @@ use Illuminate\Support\Facades\Session; // Import the Session facade
 
 Route::get('/', function () {
     $services = Service::all();
-    return view('index', compact('services'));
-});
-
-Route::get('/about', function () {
-    return view('about');
+    $testimonials = Testimonial::all();
+    return view('index', compact('services', 'testimonials'));
 });
 Route::get('/contact', function () {
     return view('contact');
 });
-
-Route::get('/service', function () {
-    $services = Service::all();
-    return view('service', compact('services'));
-
+Route::get('/about', function () {
+    return view('about');
 });
 
-Route::post('/contact_save', function (Request $request) {
-    // reciee data from form
-    // save message data to database using message model
-    //redirect back to contact page
-     // Receive data from the for
-     Message::create($request->all());
-     Session::flash('success', 'Data inserted');
-     return redirect('/contact');
-
+Route::post('/save-contact', function (Request $request) {
+    Message::create($request->all());
+    return redirect()->back()->with('success', 'Your message has been received');
 });
 
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard');
-});
-Route::post('/contact-save', function (Request $request) {
-    message::create($request->all());
-    return redirect()->back()->with('success', 'You have Successfully Registred');
+// ------------------------ Dashboard Routes -------------------------------- //
+
+Route::get('admin/dashboard', function () {
+    $messageCount = Message::count();
+    return view('admin.dashboard', compact('messageCount'));
 });
 
-Route::get('/admin/dashboard', function () {
-    $countmessage = Message::count();
-
-    return view('admin.dashboard', compact('countmessage'));
+Route::get('/admin/messages', function(){
+    $messages = Message::all();
+    return view('admin.messages', compact('messages'));
 });
+Route::get('/admin/messages/{id}/delete', function($id){
+    $message = Message::find($id);
+    $message->delete();
+    return redirect('/admin/messages')->with('You have successfully deleted a user\'s message');
+});
+
+// ----------CRUD for Service---------- //
+Route::get('admin/service', [ServiceController::class, 'index'])->name('admin.service.index');
+Route::get('admin/service/create', [ServiceController::class, 'create'])->name('admin.service.create');
+Route::post('admin/service/store', [ServiceController::class, 'store'])->name('admin.service.store');
+Route::get('admin/service/{id}/edit', [ServiceController::class, 'edit'])->name('admin.service.edit');
+Route::post('admin/service/{id}/update', [ServiceController::class, 'update'])->name('admin.service.update');
+Route::get('admin/service/{id}/delete', [ServiceController::class, 'delete'])->name('admin.service.destroy');
+// ----------CRUD for Service---------- //
